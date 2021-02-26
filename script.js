@@ -3,73 +3,79 @@ async function loadData() {
   const data = await response.json();
   return data;
 }
-
-loadData().then((data) => {
+loadData().then(data => {
   displayData(data);
 });
 
+// fetch("https://restcountries.eu/rest/v2/all")
+//   .then((res) => res.json())
+//   .then((data) => {
+//     displayData(data);
+//   });
+
 function displayData(data) {
-  console.log(data[0]);
-  let list = document.getElementById("list");
+  var tbl = document.createElement("table");
+  tbl.className = "table table-hover";
+  var thd = document.createElement("thead");
+  thd.className = "table-dark";
+  var trh = document.createElement("tr");
+  var thHash = document.createElement("th");
+  thHash.innerText = "#";
+  var thName = document.createElement("th");
+  thName.innerHTML = "Name";
+  var thCapital = document.createElement("th");
+  thCapital.innerText = "Capital";
+  var thRegion = document.createElement("th");
+  thRegion.innerText = "Region";
+  var thFlag = document.createElement("th");
+  thFlag.innerText = "Flag";
+
+  var tbdy = document.createElement("tbody");
+
+  let rw = document.getElementById("rw");
+  trh.appendChild(thHash);
+  trh.appendChild(thName);
+  trh.appendChild(thCapital);
+  trh.appendChild(thRegion);
+  trh.appendChild(thFlag);
+
   for (let i = 0; i < data.length; i++) {
-      let item = document.createElement("li");
-      item.innerHTML = (data[i].name + " " + data[i].capital + " " + data[i].region)
-      list.appendChild(item);
+    var trb = document.createElement("tr");
+    var thbHash = document.createElement("th");
+    thbHash.innerText = i + 1;
+    let item = document.createElement("td");
+    item.innerHTML = data[i].name;
+    let tdCapital = document.createElement("td");
+    tdCapital.innerText = data[i].capital;
+    let tdRegion = document.createElement("td");
+    tdRegion.innerText = data[i].subregion;
+    
+    let tdFlag = document.createElement("td");
+    tdFlag.className = "w-25";
+    tdFlag.title = data[i].name;
+    var img = document.createElement('img');
+    img.src = data[i].flag;
+    img.className = "img-fluid img-thumbnail";
+    img.alt = "sheep";
+    img.width = "40";
+    img.height = "40";
+    tdFlag.appendChild(img);
+
+    trb.appendChild(thbHash);
+    trb.appendChild(item);
+    trb.appendChild(tdCapital);
+    trb.appendChild(tdRegion);
+    trb.appendChild(tdFlag);
+
+    tbdy.appendChild(trb);
   }
+  thd.appendChild(trh);
 
-//   let tableBody = document.createElement("tbody");
-//   createTable(tableBody);
-
-//   table.appendChild(tableBody);
-//   for (let i = 0; i < data.length - 240; i++) {
-//     let tableRow = document.createElement("tr");
-//     let count = document.createElement("th");
-//     let name = document.createElement("td");
-//     let capital = document.createElement("td");
-//     let region = document.createElement("td");
-
-//     count.innerHTML = i + 1;
-//     count.scope = "row";
-//     name.innerHTML = data[i].name;
-//     capital.innerHTML = data.capital;
-//     region.innerHTML = data.subregion;
-
-//     tableBody.appendChild(tableRow);
-//     tableRow.appendChild(count);
-//     tableRow.appendChild(name);
-//     tableRow.appendChild(capital);
-//     tableRow.appendChild(region);
-
-//     //console.log(data[i].name);
-//   }
+  tbl.appendChild(thd);
+  tbl.appendChild(tbdy);
+  rw.appendChild(tbl);
 }
 
-// function createTable() {
-//   const rw = document.getElementById("rw");
-//   // cardBody.className = 'card-body';
-//   let table = document.createElement("table");
-//   table.className = "table";
-
-//   let tableHead = document.createElement("thead");
-//   tableHead.className = "table-dark";
-
-//   let tHeadRow = document.createElement("tr");
-//   let hCount = document.createElement("th");
-//   hCount.innerHTML = "#";
-//   let hName = document.createElement("th");
-//   hName.innerHTML = "Name";
-//   let hCapital = document.createElement("th");
-//   hCapital.innerHTML = "Capital";
-//   let hRegion = document.createElement("th");
-//   hRegion.innerHTML = "Region";
-
-//   tHeadRow.appendChild(hCount);
-//   tHeadRow.appendChild(hName);
-//   tHeadRow.appendChild(hCapital);
-//   tHeadRow.appendChild(hRegion);
-
-//   tableHead.appendChild(tHeadRow);
-//   table.appendChild(tHeadRow);
-//   table.appendChild(tableBody);
-//   rw.appendChild(table);
-// }
+function Clicked() {
+  console.log("Clicked");
+}
